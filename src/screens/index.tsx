@@ -12,6 +12,7 @@ import {
 import Task from './components/task';
 import {styles} from './styles';
 import {debounce} from 'lodash'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface Task {
   id: number; 
@@ -24,8 +25,6 @@ const Home = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskName, setTaskName] = useState('');
 
-
-
   function handleTaskAdd(){   
     if(taskName == ''){
         return;
@@ -34,7 +33,7 @@ const Home = () => {
     let props : Task = {
         id: date.getTime(), 
         name: taskName, 
-        state: 'doing'
+        state: 'todo'
     };
     setTasks(prevState=>[...prevState, props])
     setTaskName('');
@@ -45,6 +44,34 @@ const Home = () => {
         return Alert.alert("Remover", `Tem certeza que deseja remover a task? ${taskName}`,[{text: 'Sim', onPress:()=> setTasks(prevState => tasks.filter(tasks => tasks.id !== id))},{text: 'Não',
         style: 'cancel'}
         ]);
+    }
+
+    function handleChangeState(id: number)
+    {
+      let task : Task[] = tasks.map(x => {
+        if(x.id == id){
+          if(x.state == 'todo') {
+            return {...x, state: 'doing'}
+          } else if(x.state == 'doing') {
+            return {...x, state: 'todo'}
+          }else{
+            return {...x, state: 'doing'}
+          }       
+        }
+        return x;
+      });
+      setTasks(task);
+    }
+
+    function onCompletedState(id: number)
+    {
+      let task : Task[] = tasks.map(x => {
+        if(x.id == id){
+            return {...x, state: 'completed'}
+        }
+        return x;
+      });
+      setTasks(task);
     }
 
     const filteredData: Task[] = taskName
@@ -73,11 +100,13 @@ const Home = () => {
             <Task   
                 name={item.name} 
                 state={item.state}
+                onChangeState={()=> handleChangeState(item.id)}
+                onCompletedState={()=> onCompletedState(item.id)}
                 onRemove={()=> handleTaskRemove(item.id)}                
             />
             )}
             ListEmptyComponent={()=>(
-                <Text style={styles.listEmptyText}>Nenhuma tarefa adicionada.</Text>
+                <Text style={styles.listEmptyText}>Nenhuma tarefa encontrada.</Text>
             )}
             >
         </FlatList>

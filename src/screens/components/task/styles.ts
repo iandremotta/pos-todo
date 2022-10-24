@@ -22,20 +22,17 @@ export const styles = StyleSheet.create({
         fontSize: 24,
         color: '#fff'
     },
-    buttonState:{
-        width: 28,
-        height: 28,
-        marginLeft: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 10,
-        borderRadius: 100,
-        backgroundColor: 'orange',
-    },
     button:{
         height: 56,
         width: 56,
         backgroundColor:'#e23c44',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    buttonTask:{
+        height: 28,
+        width: 28,
+        marginLeft: 10,
         justifyContent: 'center',
         alignItems: 'center'
     },
