@@ -1,7 +1,7 @@
 # pos-todo
 Todo list em react-native
 
-Um clique, alterna entre todo e doing.
+Um clique, alterna entre todo e doing. <br>
 Pressionar clique, completa a tarefa.
 
 
